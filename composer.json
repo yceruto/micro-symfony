@@ -1,0 +1,22 @@
+{
+    "name": "yceruto/micro-symfony",
+    "description": "Micro-Symfony Tools",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "MicroSymfony\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Yonel Ceruto",
+            "email": "yonelceruto@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/http-kernel": "^5.4",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4"
+    }
+}
