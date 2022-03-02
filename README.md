@@ -75,7 +75,22 @@ class AcmeFooBundle extends MicroBundle
 ```
 
 With this class you don't have to create a separate class for `Extension` or `Configuration`. Further, all methods contain 
-configurators that allow you to import a definition or config file in any supported format (`Yaml`, `Xml`, `Php`, etc.) 
+configurators that allow you to import a definition or config file in any supported format (`yaml`, `xml`, `php`, etc.) 
+
+This is how the configuration definition should look when you are importing it from a file:
+```php
+// acme/foo_bundle/config/definition.php
+
+use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+return static function (DefinitionConfigurator $definition) {
+    $definition->rootNode()
+        ->children()
+            ->scalarNode('foo')->defaultValue('bar')->end()
+        ->end()
+    ;
+};
+```
 
 ## Micro-Extension
 
@@ -84,7 +99,7 @@ class. This `MicroExtension` class will help you to simplify your extension defi
 shortcuts and configurators:
 
 ```php
-namespace Acme\FooBundle\DependecyInjection;
+namespace App\FooModule\Infrastructure\Symfony\DependecyInjection;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use MicroSymfony\Component\DependencyInjection\Extension\MicroExtension;
@@ -135,6 +150,17 @@ class FooExtension extends MicroExtension
             $container->services()
                 ->set(Foobar::class);
         }
+    }
+}
+```
+
+You can register your extension directly into the Kernel this way:
+```php
+class Kernel extends BaseKernel
+{
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->registerExtension(new FooExtension());
     }
 }
 ```
