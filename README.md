@@ -20,7 +20,7 @@ what you only need to define and import by providing useful shortcuts and config
 namespace Acme\FooBundle;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\DependencyInjection\Extension\MicroExtension;
+use MicroSymfony\Component\HttpKernel\Bundle\MicroBundle;
 // ...
 
 class AcmeFooBundle extends MicroBundle
