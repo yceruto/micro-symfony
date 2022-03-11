@@ -2,6 +2,8 @@
 
 Class helpers for Symfony applications.
 
+![ci](https://github.com/yceruto/micro-symfony/actions/workflows/ci.yml/badge.svg)
+
 ## Installation
 
 ```
