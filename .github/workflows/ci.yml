@@ -29,7 +29,7 @@ jobs:
                   tools: composer:v2
                   ini-values: date.timezone=UTC
 
-            - name: 'Install project dependencies'
+            - name: 'Install library dependencies'
               run: |
                   composer update --no-interaction --prefer-dist --optimize-autoloader --prefer-stable
                   vendor/bin/simple-phpunit install
