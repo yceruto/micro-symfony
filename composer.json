@@ -8,6 +8,11 @@
             "MicroSymfony\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "MicroSymfony\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Yonel Ceruto",
@@ -18,5 +23,8 @@
         "symfony/http-kernel": "^5.4",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^6.0"
     }
 }
