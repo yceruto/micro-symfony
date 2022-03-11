@@ -1,19 +1,27 @@
 <?php
 
+/*
+ * This file is part of the MicroSymfony package.
+ *
+ * (c) Yonel Ceruto <yonelceruto@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace MicroSymfony\Component\DependencyInjection\Extension;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\Config\Definition\MicroConfiguration;
-use MicroSymfony\Component\Config\Definition\MicroConfigurationAwareInterface;
+use MicroSymfony\Component\Config\Definition\Configuration;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-abstract class MicroExtension extends Extension implements MicroConfigurationAwareInterface, PrependExtensionInterface
+abstract class MicroExtension extends Extension implements ConfigurableExtensionInterface, PrependExtensionInterface
 {
-    use MicroContainerExtensionTrait;
+    use ContainerExtensionTrait;
 
     public function configuration(DefinitionConfigurator $definition): void
     {
@@ -27,14 +35,9 @@ abstract class MicroExtension extends Extension implements MicroConfigurationAwa
     {
     }
 
-    public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
+    final public function getConfiguration(array $config, ContainerBuilder $container): ?ConfigurationInterface
     {
-        return new MicroConfiguration($this, $container, $this->getAlias());
-    }
-
-    public function getXsdValidationBasePath(): bool
-    {
-        return false;
+        return new Configuration($this, $container, $this->getAlias());
     }
 
     final public function prepend(ContainerBuilder $container): void

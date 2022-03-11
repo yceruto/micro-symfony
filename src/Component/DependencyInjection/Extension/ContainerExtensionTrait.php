@@ -16,9 +16,9 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-trait MicroContainerExtensionTrait
+trait ContainerExtensionTrait
 {
-    private function executeConfiguratorCallback(ContainerBuilder $container, \Closure $callback, object $subject): void
+    private function executeConfiguratorCallback(ContainerBuilder $container, \Closure $callback, ConfigurableExtensionInterface $subject): void
     {
         $env = $container->getParameter('kernel.environment');
         $loader = $this->createContainerLoader($container, $env);
