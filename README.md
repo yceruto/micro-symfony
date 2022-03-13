@@ -167,8 +167,6 @@ class Kernel extends BaseKernel
 }
 ```
 
-Note: You can use either the former or the latter, but not both.
-
 ## License
 
 This software is published under the [MIT License](LICENSE)
