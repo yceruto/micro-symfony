@@ -12,19 +12,13 @@
 namespace MicroSymfony\Component\DependencyInjection\Extension;
 
 use MicroSymfony\Component\Config\Definition\ConfigurableInterface;
-use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 interface ConfigurableExtensionInterface extends ConfigurableInterface
 {
     /**
-     * {@inheritdoc}
-     */
-    public function configuration(DefinitionConfigurator $definition): void;
-
-    /**
-     * Allow an extension to prepend the extension configurations.
+     * Allows an extension to prepend the extension configurations.
      */
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void;
 

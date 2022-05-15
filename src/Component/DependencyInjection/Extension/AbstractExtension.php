@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-abstract class MicroExtension extends Extension implements ConfigurableExtensionInterface, PrependExtensionInterface
+abstract class AbstractExtension extends Extension implements ConfigurableExtensionInterface, PrependExtensionInterface
 {
     use ContainerExtensionTrait;
 

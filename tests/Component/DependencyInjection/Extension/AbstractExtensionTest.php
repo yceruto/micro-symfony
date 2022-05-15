@@ -3,15 +3,15 @@
 namespace MicroSymfony\Tests\Component\DependencyInjection\Extension;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\DependencyInjection\Extension\MicroExtension;
+use MicroSymfony\Component\DependencyInjection\Extension\AbstractExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-class MicroExtensionTest extends MicroTestCase
+class AbstractExtensionTest extends AbstractTestCase
 {
     public function testConfiguration(): void
     {
-        $extension = new class extends MicroExtension
+        $extension = new class extends AbstractExtension
         {
             public function configuration(DefinitionConfigurator $definition): void
             {
@@ -41,7 +41,7 @@ class MicroExtensionTest extends MicroTestCase
 
     public function testPrependAppendExtensionConfig(): void
     {
-        $extension = new class extends MicroExtension
+        $extension = new class extends AbstractExtension
         {
             public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
             {
@@ -66,7 +66,7 @@ class MicroExtensionTest extends MicroTestCase
 
     public function testLoadExtension(): void
     {
-        $extension = new class extends MicroExtension
+        $extension = new class extends AbstractExtension
         {
             public function configuration(DefinitionConfigurator $definition): void
             {
