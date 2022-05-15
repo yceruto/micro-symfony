@@ -5,7 +5,7 @@ namespace MicroSymfony\Tests\Component\DependencyInjection\Extension;
 use MicroSymfony\Component\Config\Definition\ConfigurableInterface;
 use MicroSymfony\Component\Config\Definition\Configuration;
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\DependencyInjection\Extension\MicroExtension;
+use MicroSymfony\Component\DependencyInjection\Extension\AbstractExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
-abstract class MicroTestCase extends TestCase
+abstract class AbstractTestCase extends TestCase
 {
     protected function processConfiguration(ConfigurableInterface $configurable): array
     {
@@ -24,7 +24,7 @@ abstract class MicroTestCase extends TestCase
 
     protected function processPrependExtension(PrependExtensionInterface $extension): ContainerBuilder
     {
-        $thirdExtension = new class extends MicroExtension {
+        $thirdExtension = new class extends AbstractExtension {
             public function configuration(DefinitionConfigurator $definition): void
             {
                 $definition->import('../../../fixtures/config/definition/foo.php');

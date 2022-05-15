@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-abstract class MicroBundle extends Bundle implements ConfigurableExtensionInterface
+abstract class AbstractBundle extends Bundle implements ConfigurableExtensionInterface
 {
     protected string $extensionAlias = '';
 

@@ -15,17 +15,17 @@ composer require yceruto/micro-symfony
 Bundles are a very important piece of code in your Symfony applications, and most of the time they require special 
 configuration and DI extensions to achieve their goal.
 
-In that sense, this `MicroBundle` class will help you to create a concise and small bundle, fastly, focusing on 
+In that sense, this `AbstractBundle` class will help you to create a concise and small bundle, fastly, focusing on 
 what you only need to define and import by providing useful shortcuts and configurators:
 
 ```php
 namespace Acme\FooBundle;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\HttpKernel\Bundle\MicroBundle;
+use MicroSymfony\Component\HttpKernel\Bundle\AbstractBundle;
 // ...
 
-class AcmeFooBundle extends MicroBundle
+class AcmeFooBundle extends AbstractBundle
 {
     protected string $extensionAlias = ''; // set here the custom extension alias, e.g. 'foo' (default 'acme_foo')
 
@@ -97,17 +97,17 @@ return static function (DefinitionConfigurator $definition) {
 ## Micro-Extension
 
 In some cases, mainly for bundle-less approach, you might want to add a DI extension to your application without a bundle 
-class. This `MicroExtension` class will help you to simplify your extension definition by providing the same useful 
+class. This `AbstractExtension` class will help you to simplify your extension definition by providing the same useful 
 shortcuts and configurators:
 
 ```php
 namespace App\FooModule\Infrastructure\Symfony\DependecyInjection;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\DependencyInjection\Extension\MicroExtension;
+use MicroSymfony\Component\DependencyInjection\Extension\AbstractExtension;
 // ...
 
-class FooExtension extends MicroExtension
+class FooExtension extends AbstractExtension
 {
     public function configuration(DefinitionConfigurator $definition): void
     {
@@ -165,6 +165,22 @@ class Kernel extends BaseKernel
         $container->registerExtension(new FooExtension());
     }
 }
+```
+
+## Symfony 6 Support
+
+This feature is fully implemented since Symfony 6.1, so you can remove 
+this package from your dependencies after upgrading accordingly.
+
+### Upgrade Notes
+
+All classes included in this package are registered under the `MicroSymfony` namespace,
+however, they follow the same organization that Symfony. Thus, to upgrade just remove 
+the `Micro` prefix from all imported classes and everything should keep working as before.
+
+```git
+-use MicroSymfony\Component\DependencyInjection\Extension\AbstractExtension;
++use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
 ```
 
 ## License

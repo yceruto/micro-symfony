@@ -3,16 +3,16 @@
 namespace MicroSymfony\Tests\Component\HttpKernel\Bundle;
 
 use MicroSymfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-use MicroSymfony\Component\HttpKernel\Bundle\MicroBundle;
-use MicroSymfony\Tests\Component\DependencyInjection\Extension\MicroTestCase;
+use MicroSymfony\Component\HttpKernel\Bundle\AbstractBundle;
+use MicroSymfony\Tests\Component\DependencyInjection\Extension\AbstractTestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-class MicroBundleTest extends MicroTestCase
+class AbstractBundleTest extends AbstractTestCase
 {
     public function testConfiguration(): void
     {
-        $bundle = new class extends MicroBundle
+        $bundle = new class extends AbstractBundle
         {
             public function configuration(DefinitionConfigurator $definition): void
             {
@@ -43,7 +43,7 @@ class MicroBundleTest extends MicroTestCase
 
     public function testPrependAppendExtensionConfig(): void
     {
-        $bundle = new class extends MicroBundle
+        $bundle = new class extends AbstractBundle
         {
             public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
             {
@@ -68,7 +68,7 @@ class MicroBundleTest extends MicroTestCase
 
     public function testLoadExtension(): void
     {
-        $bundle = new class extends MicroBundle
+        $bundle = new class extends AbstractBundle
         {
             protected string $extensionAlias = 'micro';
 
