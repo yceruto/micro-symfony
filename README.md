@@ -178,7 +178,7 @@ All classes included in this package are registered under the `MicroSymfony` nam
 however, they follow the same organization that Symfony. Thus, to upgrade just remove 
 the `Micro` prefix from all imported classes and everything should keep working as before.
 
-```git
+```diff
 -use MicroSymfony\Component\DependencyInjection\Extension\AbstractExtension;
 +use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
 ```
