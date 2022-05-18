@@ -41,7 +41,7 @@ final class Configuration implements ConfigurationInterface
         $loader = new DefinitionFileLoader($treeBuilder, new FileLocator(\dirname($file)), $this->container);
         $configurator = new DefinitionConfigurator($treeBuilder, $loader, $file, $file);
 
-        $this->subject->configuration($configurator);
+        $this->subject->configure($configurator);
 
         return $treeBuilder;
     }

@@ -14,7 +14,7 @@ class AbstractBundleTest extends AbstractTestCase
     {
         $bundle = new class extends AbstractBundle
         {
-            public function configuration(DefinitionConfigurator $definition): void
+            public function configure(DefinitionConfigurator $definition): void
             {
                 // load one
                 $definition->import('../../../fixtures/config/definition/foo.php');
@@ -72,7 +72,7 @@ class AbstractBundleTest extends AbstractTestCase
         {
             protected string $extensionAlias = 'micro';
 
-            public function configuration(DefinitionConfigurator $definition): void
+            public function configure(DefinitionConfigurator $definition): void
             {
                 $definition->import('../../../fixtures/config/definition/foo.php');
             }

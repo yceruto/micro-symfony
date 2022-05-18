@@ -13,7 +13,7 @@ class AbstractExtensionTest extends AbstractTestCase
     {
         $extension = new class extends AbstractExtension
         {
-            public function configuration(DefinitionConfigurator $definition): void
+            public function configure(DefinitionConfigurator $definition): void
             {
                 // load one
                 $definition->import('../../../fixtures/config/definition/foo.php');
@@ -68,7 +68,7 @@ class AbstractExtensionTest extends AbstractTestCase
     {
         $extension = new class extends AbstractExtension
         {
-            public function configuration(DefinitionConfigurator $definition): void
+            public function configure(DefinitionConfigurator $definition): void
             {
                 $definition->import('../../../fixtures/config/definition/foo.php');
             }
