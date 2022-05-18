@@ -23,7 +23,7 @@ abstract class AbstractBundle extends Bundle implements ConfigurableExtensionInt
 {
     protected string $extensionAlias = '';
 
-    public function configuration(DefinitionConfigurator $definition): void
+    public function configure(DefinitionConfigurator $definition): void
     {
     }
 

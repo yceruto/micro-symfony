@@ -23,7 +23,7 @@ abstract class AbstractExtension extends Extension implements ConfigurableExtens
 {
     use ContainerExtensionTrait;
 
-    public function configuration(DefinitionConfigurator $definition): void
+    public function configure(DefinitionConfigurator $definition): void
     {
     }
 

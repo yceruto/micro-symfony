@@ -25,7 +25,7 @@ abstract class AbstractTestCase extends TestCase
     protected function processPrependExtension(PrependExtensionInterface $extension): ContainerBuilder
     {
         $thirdExtension = new class extends AbstractExtension {
-            public function configuration(DefinitionConfigurator $definition): void
+            public function configure(DefinitionConfigurator $definition): void
             {
                 $definition->import('../../../fixtures/config/definition/foo.php');
             }

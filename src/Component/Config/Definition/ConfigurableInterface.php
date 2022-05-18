@@ -18,5 +18,5 @@ interface ConfigurableInterface
     /**
      * Generates the configuration tree builder.
      */
-    public function configuration(DefinitionConfigurator $definition): void;
+    public function configure(DefinitionConfigurator $definition): void;
 }
