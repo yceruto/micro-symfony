@@ -47,18 +47,13 @@ class AcmeFooBundle extends AbstractBundle
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        // prepend config to other bundles
+        // prepend config from plain array
         $builder->prependExtensionConfig('framework', [
             'cache' => ['prefix_seed' => 'foo/bar'],
         ]);
 
-        // append config to other bundles
-        $container->extension('framework', [
-            'cache' => ['prefix_seed' => 'foo/bar'],
-        ])
-
-        // append config to other bundles from a config file
-        $container->import('../config/packages/cache.php');
+        // prepend config from a config file
+        $container->import('../config/packages/cache.yaml');
     }
 
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
@@ -127,18 +122,13 @@ class FooExtension extends AbstractExtension
 
     public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
     {
-        // prepend config to other bundles
+        // prepend config from plain array
         $builder->prependExtensionConfig('framework', [
             'cache' => ['prefix_seed' => 'foo/bar'],
         ]);
 
-        // append config to other bundles
-        $container->extension('framework', [
-            'cache' => ['prefix_seed' => 'foo/bar'],
-        ])
-
-        // append config to other bundles from a config file
-        $container->import('../../config/packages/cache.php');
+        // prepend config from a config file
+        $container->import('../../config/packages/cache.yaml');
     }
 
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
