@@ -45,20 +45,21 @@ class AbstractExtensionTest extends AbstractTestCase
         {
             public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
             {
-                // append config
-                $container->extension('third', ['foo' => 'append']);
+                // prepend config from plain array
+                $builder->prependExtensionConfig('third', ['foo' => 'array']);
 
-                // prepend config
-                $builder->prependExtensionConfig('third', ['foo' => 'prepend']);
+                // prepend config from file
+                $container->import('../../../fixtures/config/prepend/third.yaml');
             }
         };
 
         $container = $this->processPrependExtension($extension);
 
         $expected = [
-            ['foo' => 'prepend'],
+            ['foo' => 'file_use'],
+            ['foo' => 'file'],
+            ['foo' => 'array'],
             ['foo' => 'bar'],
-            ['foo' => 'append'],
         ];
 
         self::assertSame($expected, $container->getExtensionConfig('third'));
