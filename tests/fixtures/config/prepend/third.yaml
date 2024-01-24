@@ -1,0 +1,5 @@
+imports:
+    - 'third_use.yaml'
+
+third:
+    foo: file

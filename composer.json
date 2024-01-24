@@ -26,6 +26,8 @@
         "symfony/dependency-injection": "^5.4||^6.0"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^6.0"
+        "symfony/phpunit-bridge": "^6.0",
+        "symfony/yaml": "^5.4",
+        "symfony/expression-language": "^5.4"
     }
 }
