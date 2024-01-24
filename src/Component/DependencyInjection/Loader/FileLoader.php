@@ -27,7 +27,7 @@ abstract class FileLoader extends \Symfony\Component\DependencyInjection\Loader\
         parent::__construct($container, $locator, $env);
     }
 
-    public function import($resource, string $type = null, $ignoreErrors = false, string $sourceResource = null, $exclude = null)
+    public function import(mixed $resource, string $type = null, bool|string $ignoreErrors = false, string $sourceResource = null, $exclude = null): mixed
     {
         ++$this->importing;
         try {
