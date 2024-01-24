@@ -31,7 +31,7 @@ jobs:
 
             - name: 'Install library dependencies'
               run: |
-                  composer update --no-interaction --prefer-dist --optimize-autoloader --prefer-stable
+                  composer update --no-interaction --prefer-dist --prefer-stable
                   vendor/bin/simple-phpunit install
 
             - name: 'Run tests'
