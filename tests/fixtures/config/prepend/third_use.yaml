@@ -1,2 +1,6 @@
 third:
     foo: file_use
+
+when@test:
+    third:
+        foo: file_test_use

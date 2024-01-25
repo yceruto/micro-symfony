@@ -59,7 +59,9 @@ class AbstractBundleTest extends AbstractTestCase
 
         $expected = [
             ['foo' => 'file_use'],
+            ['foo' => 'file_test_use'],
             ['foo' => 'file'],
+            ['foo' => 'file_test'],
             ['foo' => 'array'],
             ['foo' => 'bar'],
         ];
