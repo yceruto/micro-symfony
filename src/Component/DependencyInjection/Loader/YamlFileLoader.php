@@ -37,8 +37,10 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class YamlFileLoader extends FileLoader
+class YamlFileLoader extends \Symfony\Component\DependencyInjection\Loader\YamlFileLoader
 {
+    use FileLoaderTrait;
+
     private const SERVICE_KEYWORDS = [
         'alias' => 'alias',
         'parent' => 'parent',
@@ -107,11 +109,8 @@ class YamlFileLoader extends FileLoader
     ];
 
     private $yamlParser;
-
     private $anonymousServicesCount;
     private $anonymousServicesSuffix;
-
-    protected $autoRegisterAliasesForSinglyImplementedInterfaces = false;
 
     /**
      * {@inheritdoc}
