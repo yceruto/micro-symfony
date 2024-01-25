@@ -3,3 +3,7 @@ imports:
 
 third:
     foo: file
+
+when@test:
+    third:
+        foo: file_test

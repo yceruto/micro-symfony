@@ -14,7 +14,7 @@ namespace MicroSymfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-abstract class FileLoader extends \Symfony\Component\DependencyInjection\Loader\FileLoader
+trait FileLoaderTrait
 {
     protected bool $prepend = false;
     protected array $extensionConfigs = [];

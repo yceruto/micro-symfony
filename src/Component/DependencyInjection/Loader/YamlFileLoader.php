@@ -37,8 +37,10 @@ use Symfony\Component\Yaml\Yaml;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class YamlFileLoader extends FileLoader
+class YamlFileLoader extends \Symfony\Component\DependencyInjection\Loader\YamlFileLoader
 {
+    use FileLoaderTrait;
+
     private const SERVICE_KEYWORDS = [
         'alias' => 'alias',
         'parent' => 'parent',
@@ -107,16 +109,13 @@ class YamlFileLoader extends FileLoader
     ];
 
     private $yamlParser;
-
     private $anonymousServicesCount;
     private $anonymousServicesSuffix;
-
-    protected $autoRegisterAliasesForSinglyImplementedInterfaces = false;
 
     /**
      * {@inheritdoc}
      */
-    public function load($resource, string $type = null)
+    public function load(mixed $resource, string $type = null): mixed
     {
         $path = $this->locator->locate($resource);
 
@@ -129,22 +128,28 @@ class YamlFileLoader extends FileLoader
             return null;
         }
 
-        $this->loadContent($content, $path);
+        ++$this->importing;
+        try {
+            $this->loadContent($content, $path);
 
-        // per-env configuration
-        if ($this->env && isset($content['when@'.$this->env])) {
-            if (!\is_array($content['when@'.$this->env])) {
-                throw new InvalidArgumentException(sprintf('The "when@%s" key should contain an array in "%s". Check your YAML syntax.', $this->env, $path));
-            }
+            // per-env configuration
+            if ($this->env && isset($content['when@'.$this->env])) {
+                if (!\is_array($content['when@'.$this->env])) {
+                    throw new InvalidArgumentException(sprintf('The "when@%s" key should contain an array in "%s". Check your YAML syntax.', $this->env, $path));
+                }
 
-            $env = $this->env;
-            $this->env = null;
-            try {
-                $this->loadContent($content['when@'.$env], $path);
-            } finally {
-                $this->env = $env;
+                $env = $this->env;
+                $this->env = null;
+                try {
+                    $this->loadContent($content['when@'.$env], $path);
+                } finally {
+                    $this->env = $env;
+                }
             }
+        } finally {
+            --$this->importing;
         }
+        $this->loadExtensionConfigs();
 
         return null;
     }
@@ -183,7 +188,7 @@ class YamlFileLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, string $type = null)
+    public function supports(mixed $resource, string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;
@@ -747,7 +752,7 @@ class YamlFileLoader extends FileLoader
      *
      * @throws InvalidArgumentException when the given file is not a local file or when it does not exist
      */
-    protected function loadFile(string $file)
+    protected function loadFile(string $file): ?array
     {
         if (!class_exists(\Symfony\Component\Yaml\Parser::class)) {
             throw new RuntimeException('Unable to load YAML config files as the Symfony Yaml Component is not installed.');
