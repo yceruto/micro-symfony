@@ -2,6 +2,7 @@
 
 namespace MicroSymfony\Component\DependencyInjection\Extension;
 
+use MicroSymfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use MicroSymfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\Builder\ConfigBuilderGenerator;
 use Symfony\Component\Config\FileLocator;
@@ -13,7 +14,6 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Loader\DirectoryLoader;
 use Symfony\Component\DependencyInjection\Loader\GlobFileLoader;
 use Symfony\Component\DependencyInjection\Loader\IniFileLoader;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 trait ContainerExtensionTrait
@@ -46,7 +46,7 @@ trait ContainerExtensionTrait
             new XmlFileLoader($container, $locator, $env),
             new YamlFileLoader($container, $locator, $env, $prepend),
             new IniFileLoader($container, $locator, $env),
-            new PhpFileLoader($container, $locator, $env, new ConfigBuilderGenerator($buildDir)),
+            new PhpFileLoader($container, $locator, $env, new ConfigBuilderGenerator($buildDir), $prepend),
             new GlobFileLoader($container, $locator, $env),
             new DirectoryLoader($container, $locator, $env),
             new ClosureLoader($container, $env),
