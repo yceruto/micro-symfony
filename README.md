@@ -157,10 +157,15 @@ class Kernel extends BaseKernel
 }
 ```
 
-## Symfony 6 Support
+## Symfony 6.1 Support
 
 This feature is fully implemented since Symfony 6.1, so you can remove 
 this package from your dependencies after upgrading accordingly.
+
+## Symfony 7.1 Support
+
+The `$container->import()` method support in `prependExtension` was implemented in Symfony 7.1,
+so you can remove this package from your dependencies after upgrading accordingly.
 
 ### Upgrade Notes
 
