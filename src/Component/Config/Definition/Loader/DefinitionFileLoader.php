@@ -35,7 +35,7 @@ class DefinitionFileLoader extends FileLoader
      *
      * @return mixed
      */
-    public function load($resource, string $type = null)
+    public function load($resource, string $type = null): mixed
     {
         // the loader variable is exposed to the included file below
         $loader = $this;
