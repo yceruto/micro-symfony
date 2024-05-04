@@ -2,6 +2,11 @@
 
 Implement new Symfony features in older versions!
 
+[![Latest Stable Version](http://poser.pugx.org/yceruto/micro-symfony/v)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![Total Downloads](http://poser.pugx.org/yceruto/micro-symfony/downloads)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![Latest Unstable Version](http://poser.pugx.org/yceruto/micro-symfony/v/unstable)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![License](http://poser.pugx.org/yceruto/micro-symfony/license)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![PHP Version Require](http://poser.pugx.org/yceruto/micro-symfony/require/php)](https://packagist.org/packages/yceruto/micro-symfony)
 ![ci](https://github.com/yceruto/micro-symfony/actions/workflows/ci.yml/badge.svg)
 
 ## Installation
