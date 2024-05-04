@@ -15,7 +15,7 @@ Implement new Symfony features in older versions!
 composer require yceruto/micro-symfony
 ```
 
-## Micro-Bundle
+## AbstractBundle
 
 Bundles are a very important piece of code in your Symfony applications, and most of the time they require special 
 configuration and DI extensions to achieve their goal.
@@ -94,7 +94,7 @@ return static function (DefinitionConfigurator $definition) {
 };
 ```
 
-## Micro-Extension
+## AbstractExtension
 
 In some cases, mainly for bundle-less approach, you might want to add a DI extension to your application without a bundle 
 class. This `AbstractExtension` class will help you to simplify your extension definition by providing the same useful 
