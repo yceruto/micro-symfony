@@ -1,6 +1,6 @@
-# Micro-Symfony Tools
+# Backported Symfony features
 
-Class helpers for Symfony applications.
+Implement new Symfony features in older versions!
 
 ![ci](https://github.com/yceruto/micro-symfony/actions/workflows/ci.yml/badge.svg)
 
