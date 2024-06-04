@@ -1,9 +1,0 @@
-imports:
-    - 'third_use.yaml'
-
-third:
-    foo: file
-
-when@test:
-    third:
-        foo: file_test
