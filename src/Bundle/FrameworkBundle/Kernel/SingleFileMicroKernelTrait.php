@@ -2,6 +2,8 @@
 
 namespace MicroSymfony\Bundle\FrameworkBundle\Kernel;
 
+use App;
+use Symfony\Bundle\FrameworkBundle\Console\Application as ConsoleApplication;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
