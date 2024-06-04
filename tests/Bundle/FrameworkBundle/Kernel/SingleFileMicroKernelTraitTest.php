@@ -2,28 +2,24 @@
 
 namespace MicroSymfony\Tests\Bundle\FrameworkBundle\Kernel;
 
-use MicroSymfony\Bundle\FrameworkBundle\Kernel\SingleFileMicroKernelTrait;
+use MicroSymfony\Bundle\FrameworkBundle\Kernel\SingleFileKernel;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SingleFileMicroKernelTraitTest extends TestCase
 {
     public function testApp(): void
     {
-        $app = new App('test', true);
-        $response = $app->__invoke();
+        $kernel = new Kernel('test', true);
+        $response = $kernel->__invoke();
 
         $this->assertSame('Hello World!', $response->getContent());
     }
 }
 
-class App extends Kernel
+class Kernel extends SingleFileKernel
 {
-    use SingleFileMicroKernelTrait;
-
     #[Route('/')]
     public function __invoke(): Response
     {
