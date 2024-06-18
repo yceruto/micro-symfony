@@ -10,7 +10,7 @@ Class helpers for Symfony applications.
 composer require yceruto/micro-symfony
 ```
 
-## Micro-Bundle
+## AbstractBundle
 
 Bundles are a very important piece of code in your Symfony applications, and most of the time they require special 
 configuration and DI extensions to achieve their goal.
@@ -89,7 +89,7 @@ return static function (DefinitionConfigurator $definition) {
 };
 ```
 
-## Micro-Extension
+## AbstractExtension
 
 In some cases, mainly for bundle-less approach, you might want to add a DI extension to your application without a bundle 
 class. This `AbstractExtension` class will help you to simplify your extension definition by providing the same useful 
@@ -157,6 +157,45 @@ class Kernel extends BaseKernel
 }
 ```
 
+## MicroKernel
+
+This class is an implementation of the base `Kernel` + `MicroKernelTrait` that allows you to create a 
+single "one-file" application for your cloud workers, microservices, or any other small application.
+
+```php
+// index.php
+
+use MicroSymfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\HttpKernel\Kernel;
+
+class StripeWebhookEventSubscriber extends Kernel
+{
+    use MicroKernelTrait;
+
+    #[Route('/', methods: 'GET')]
+    public function __invoke(Request $request, NotifierInterface $notifier): Response
+    {
+        // parse the webhook event and notify the user...
+    
+        return new Response('OK');
+    }
+}
+
+return static function (array $context) {
+    $kernel = new StripeWebhookEventSubscriber($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+
+    return \PHP_SAPI === 'cli' ? new Application($kernel) : $kernel;
+};
+```
+
+You can use the same `index.php` as console application to perform the common cache clear operations or any other
+command you need to run.
+
+```bash
+$ php index.php cache:clear
+```
+
 ## Symfony 6.1 Support
 
 This feature is fully implemented since Symfony 6.1, so you can remove 
@@ -166,6 +205,11 @@ this package from your dependencies after upgrading accordingly.
 
 The `$container->import()` method support in `prependExtension` was implemented in Symfony 7.1,
 so you can remove this package from your dependencies after upgrading accordingly.
+
+## Symfony 7.2 Support
+
+The `MicroKernelTrait` optional capabilities were implemented in Symfony 7.2, so you can remove this package
+from your dependencies after upgrading accordingly.
 
 ### Upgrade Notes
 
