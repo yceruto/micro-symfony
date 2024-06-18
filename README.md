@@ -157,10 +157,10 @@ class Kernel extends BaseKernel
 }
 ```
 
-## MicroKernel
+## MicroKernelTrait
 
 This class is an implementation of the base `Kernel` + `MicroKernelTrait` that allows you to create a 
-single "one-file" application for your cloud workers, microservices, or any other small application.
+single "one-file" application for your cloud worker, microservice, or any other small application.
 
 ```php
 // index.php
