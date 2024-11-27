@@ -22,7 +22,7 @@ class DefinitionFileLoader extends FileLoader
     private TreeBuilder $treeBuilder;
     private ?ContainerBuilder $container;
 
-    public function __construct(TreeBuilder $treeBuilder, FileLocatorInterface $locator, ContainerBuilder $container = null)
+    public function __construct(TreeBuilder $treeBuilder, FileLocatorInterface $locator, ?ContainerBuilder $container = null)
     {
         $this->treeBuilder = $treeBuilder;
         $this->container = $container;
@@ -35,7 +35,7 @@ class DefinitionFileLoader extends FileLoader
      *
      * @return mixed
      */
-    public function load($resource, string $type = null)
+    public function load($resource, ?string $type = null)
     {
         // the loader variable is exposed to the included file below
         $loader = $this;
@@ -63,7 +63,7 @@ class DefinitionFileLoader extends FileLoader
     /**
      * {@inheritdoc}
      */
-    public function supports($resource, string $type = null): bool
+    public function supports($resource, ?string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;
