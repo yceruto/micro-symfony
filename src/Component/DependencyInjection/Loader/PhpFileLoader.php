@@ -37,7 +37,7 @@ class PhpFileLoader extends \Symfony\Component\DependencyInjection\Loader\PhpFil
 
     private $generator;
 
-    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator, string $env = null, ConfigBuilderGeneratorInterface $generator = null, bool $prepend = false)
+    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator, ?string $env = null, ?ConfigBuilderGeneratorInterface $generator = null, bool $prepend = false)
     {
         $this->generator = $generator;
         $this->prepend = $prepend;
@@ -48,7 +48,7 @@ class PhpFileLoader extends \Symfony\Component\DependencyInjection\Loader\PhpFil
     /**
      * {@inheritdoc}
      */
-    public function load(mixed $resource, string $type = null): mixed
+    public function load(mixed $resource, ?string $type = null): mixed
     {
         // the container and loader variables are exposed to the included file below
         $container = $this->container;
@@ -80,7 +80,7 @@ class PhpFileLoader extends \Symfony\Component\DependencyInjection\Loader\PhpFil
     /**
      * {@inheritdoc}
      */
-    public function supports(mixed $resource, string $type = null): bool
+    public function supports(mixed $resource, ?string $type = null): bool
     {
         if (!\is_string($resource)) {
             return false;
