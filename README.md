@@ -1,7 +1,12 @@
-# Micro-Symfony Tools
+# Backported Symfony features
 
-Class helpers for Symfony applications.
+Implement new Symfony features in older versions!
 
+[![Latest Stable Version](http://poser.pugx.org/yceruto/micro-symfony/v)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![Total Downloads](http://poser.pugx.org/yceruto/micro-symfony/downloads)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![Latest Unstable Version](http://poser.pugx.org/yceruto/micro-symfony/v/unstable)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![License](http://poser.pugx.org/yceruto/micro-symfony/license)](https://packagist.org/packages/yceruto/micro-symfony) 
+[![PHP Version Require](http://poser.pugx.org/yceruto/micro-symfony/require/php)](https://packagist.org/packages/yceruto/micro-symfony)
 ![ci](https://github.com/yceruto/micro-symfony/actions/workflows/ci.yml/badge.svg)
 
 ## Installation
@@ -194,6 +199,29 @@ command you need to run.
 
 ```bash
 $ php index.php cache:clear
+```
+
+## Server-Sent Event (SSE) Improvements
+
+This package provides utilities to enhance working with server-sent events (SSE) in Symfony applications.
+
+- **EventStreamResponse:** A response object designed specifically for streaming server events.
+- **ServerEvent:** Used to construct and emit individual server events in the response.
+
+**Example Usage:**
+
+```php
+return new EventStreamResponse(function () {
+    while (true) {
+        yield new ServerEvent(time(), type: 'ping');
+
+        if (connection_aborted()) {
+            break;
+        }
+
+        sleep(1);
+    }
+});
 ```
 
 ## Symfony 6.1 Support
