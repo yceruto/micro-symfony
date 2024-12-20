@@ -162,6 +162,29 @@ class Kernel extends BaseKernel
 }
 ```
 
+## Server-Sent Event (SSE) Improvements
+
+This package provides utilities to enhance working with server-sent events (SSE) in Symfony applications.
+
+- **EventStreamResponse:** A response object designed specifically for streaming server events.
+- **ServerEvent:** Used to construct and emit individual server events in the response.
+
+**Example Usage:**
+
+```php
+return new EventStreamResponse(function () {
+    while (true) {
+        yield new ServerEvent(time(), type: 'ping');
+
+        if (connection_aborted()) {
+            break;
+        }
+
+        sleep(1);
+    }
+});
+```
+
 ## Symfony 6.1 Support
 
 This feature is fully implemented since Symfony 6.1, so you can remove 
