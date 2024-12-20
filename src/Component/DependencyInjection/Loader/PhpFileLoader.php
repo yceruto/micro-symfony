@@ -35,7 +35,7 @@ class PhpFileLoader extends \Symfony\Component\DependencyInjection\Loader\PhpFil
 {
     use FileLoaderTrait;
 
-    private $generator;
+    private ?ConfigBuilderGeneratorInterface $generator;
 
     public function __construct(ContainerBuilder $container, FileLocatorInterface $locator, ?string $env = null, ?ConfigBuilderGeneratorInterface $generator = null, bool $prepend = false)
     {
