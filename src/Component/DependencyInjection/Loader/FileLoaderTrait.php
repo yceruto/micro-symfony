@@ -20,14 +20,14 @@ trait FileLoaderTrait
     protected array $extensionConfigs = [];
     protected int $importing = 0;
 
-    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator, string $env = null, bool $prepend = false)
+    public function __construct(ContainerBuilder $container, FileLocatorInterface $locator, ?string $env = null, bool $prepend = false)
     {
         $this->prepend = $prepend;
 
         parent::__construct($container, $locator, $env);
     }
 
-    public function import(mixed $resource, string $type = null, bool|string $ignoreErrors = false, string $sourceResource = null, $exclude = null): mixed
+    public function import(mixed $resource, ?string $type = null, bool|string $ignoreErrors = false, ?string $sourceResource = null, $exclude = null): mixed
     {
         ++$this->importing;
         try {
