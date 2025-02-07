@@ -17,6 +17,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * Represents a streaming HTTP response for sending server events
  * as part of the Server-Sent Events (SSE) streaming technique.
  *
+ * To broadcast events to multiple users at once, for long-running
+ * connections and for high-traffic websites, prefer using the Mercure
+ * Symfony Component, which relies on Software designed for these use
+ * cases: https://symfony.com/doc/current/mercure.html
+ *
  * @see ServerEvent
  *
  * @author Yonel Ceruto <open@yceruto.dev>
@@ -24,28 +29,28 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * Example usage:
  *
  *     return new EventStreamResponse(function () {
- *         while (true) {
- *             yield new ServerEvent(time(), type: 'ping');
+ *         yield new ServerEvent(time());
  *
- *             if (connection_aborted()) {
- *                 break;
- *             }
+ *         sleep(1);
  *
- *             sleep(1);
- *         }
+ *         yield new ServerEvent(time());
  *     });
  */
 class EventStreamResponse extends StreamedResponse
 {
     /**
-     * @param int $retry The event reconnection time in milliseconds
+     * @param int|null $retry The number of milliseconds the client should wait
+     *                        before reconnecting in case of network failure
      */
-    public function __construct(?callable $callback = null, int $status = 200, array $headers = [], private int $retry = 0)
+    public function __construct(?callable $callback = null, int $status = 200, array $headers = [], private ?int $retry = null)
     {
         $headers += [
-            'Content-Type' => 'text/event-stream',
-            'Cache-Control' => 'no-cache',
             'Connection' => 'keep-alive',
+            'Content-Type' => 'text/event-stream',
+            'Cache-Control' => 'private, no-cache, no-store, must-revalidate, max-age=0',
+            'X-Accel-Buffering' => 'no',
+            'Pragma' => 'no-cache',
+            'Expire' => '0',
         ];
 
         parent::__construct($callback, $status, $headers);
@@ -61,6 +66,10 @@ class EventStreamResponse extends StreamedResponse
             if (is_iterable($events = $callback($this))) {
                 foreach ($events as $event) {
                     $this->sendEvent($event);
+
+                    if (connection_aborted()) {
+                        break;
+                    }
                 }
             }
         };
@@ -69,27 +78,29 @@ class EventStreamResponse extends StreamedResponse
     }
 
     /**
-     * @param bool $flush Whether output buffers should be flushed
+     * Sends a server event to the client.
      *
      * @return $this
      */
-    public function sendEvent(ServerEvent $event, bool $flush = true): static
+    public function sendEvent(ServerEvent $event): static
     {
-        if ($this->retry > 0 && 0 === $event->getRetry()) {
+        if ($this->retry > 0 && !$event->getRetry()) {
             $event->setRetry($this->retry);
         }
 
-        echo $event;
+        foreach ($event as $part) {
+            echo $part;
 
-        if ($flush && !\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
-            static::closeOutputBuffers(0, true);
-            flush();
+            if (!\in_array(\PHP_SAPI, ['cli', 'phpdbg', 'embed'], true)) {
+                static::closeOutputBuffers(0, true);
+                flush();
+            }
         }
 
         return $this;
     }
 
-    public function getRetry(): int
+    public function getRetry(): ?int
     {
         return $this->retry;
     }

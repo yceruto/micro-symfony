@@ -12,23 +12,27 @@
 namespace MicroSymfony\Component\HttpFoundation;
 
 /**
- * A server event to send as part of the SSE streaming technique.
+ * An event generated on the server intended for streaming to the client
+ * as part of the SSE streaming technique.
+ *
+ * @implements \IteratorAggregate<string>
  *
  * @author Yonel Ceruto <open@yceruto.dev>
  */
-class ServerEvent
+class ServerEvent implements \IteratorAggregate
 {
     /**
      * @param string|iterable<string> $data    The event data field for the message
      * @param string|null             $type    The event type
-     * @param int                     $retry   The event reconnection time in milliseconds
+     * @param int|null                $retry   The number of milliseconds the client should wait
+     *                                         before reconnecting in case of network failure
      * @param string|null             $id      The event ID to set the EventSource object's last event ID value
      * @param string|null             $comment The event comment
      */
     public function __construct(
         private string|iterable $data,
         private ?string $type = null,
-        private int $retry = 0,
+        private ?int $retry = null,
         private ?string $id = null,
         private ?string $comment = null,
     ) {
@@ -64,7 +68,7 @@ class ServerEvent
         return $this;
     }
 
-    public function getRetry(): int
+    public function getRetry(): ?int
     {
         return $this->retry;
     }
@@ -72,7 +76,7 @@ class ServerEvent
     /**
      * @return $this
      */
-    public function setRetry(int $retry): static
+    public function setRetry(?int $retry): static
     {
         $this->retry = $retry;
 
@@ -106,32 +110,38 @@ class ServerEvent
         return $this;
     }
 
-    public function __toString(): string
+    /**
+     * @return \Traversable<string>
+     */
+    public function getIterator(): \Traversable
     {
-        $event = [];
+        static $lastRetry = null;
 
+        $head = '';
         if ($this->comment) {
-            $event[] = \sprintf(': %s', $this->comment);
+            $head .= \sprintf(': %s', $this->comment)."\n";
         }
         if ($this->id) {
-            $event[] = \sprintf('id: %s', $this->id);
+            $head .= \sprintf('id: %s', $this->id)."\n";
         }
-        if ($this->retry > 0) {
-            $event[] = \sprintf('retry: %s', $this->retry);
+        if ($this->retry > 0 && $this->retry !== $lastRetry) {
+            $head .= \sprintf('retry: %s', $lastRetry = $this->retry)."\n";
         }
         if ($this->type) {
-            $event[] = \sprintf('event: %s', $this->type);
+            $head .= \sprintf('event: %s', $this->type)."\n";
         }
+        yield $head;
+
         if ($this->data) {
             if (is_iterable($this->data)) {
                 foreach ($this->data as $data) {
-                    $event[] = \sprintf('data: %s', $data);
+                    yield \sprintf('data: %s', $data)."\n";
                 }
             } else {
-                $event[] = \sprintf('data: %s', $this->data);
+                yield \sprintf('data: %s', $this->data)."\n";
             }
         }
 
-        return implode("\n", $event)."\n\n";
+        yield "\n";
     }
 }
