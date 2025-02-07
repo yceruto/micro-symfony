@@ -76,6 +76,10 @@ class AcmeFooBundle extends AbstractBundle
 }
 ```
 
+> [!NOTE]
+> The `$container->import()` method support in `prependExtension` was implemented in Symfony 7.1,
+> so you can remove this package from your dependencies after upgrading accordingly.
+
 With this class you don't have to create a separate class for `Extension` or `Configuration`. Further, all methods contain 
 configurators that allow you to import a definition or config file in any supported format (`yaml`, `xml`, `php`, etc.) 
 
@@ -93,6 +97,10 @@ return static function (DefinitionConfigurator $definition) {
     ;
 };
 ```
+
+> [!NOTE]
+> `AbstractBundle` is fully implemented since Symfony 6.1, so you can remove
+> this package from your dependencies after upgrading accordingly.
 
 ## AbstractExtension
 
@@ -151,6 +159,10 @@ class FooExtension extends AbstractExtension
 }
 ```
 
+> [!NOTE]
+> The `$container->import()` method support in `prependExtension` was implemented in Symfony 7.1,
+> so you can remove this package from your dependencies after upgrading accordingly.
+
 You can register your extension directly into the Kernel this way:
 ```php
 class Kernel extends BaseKernel
@@ -161,6 +173,10 @@ class Kernel extends BaseKernel
     }
 }
 ```
+
+> [!NOTE]
+> `AbstractExtension` is fully implemented since Symfony 6.1, so you can remove
+> this package from your dependencies after upgrading accordingly.
 
 ## MicroKernelTrait
 
@@ -201,6 +217,10 @@ command you need to run.
 $ php index.php cache:clear
 ```
 
+> [!NOTE]
+> The `MicroKernelTrait` optional capabilities were implemented in Symfony 7.2, so you can remove this package
+> from your dependencies after upgrading accordingly.
+
 ## Server-Sent Event (SSE) Improvements
 
 This package provides utilities to enhance working with server-sent events (SSE) in Symfony applications.
@@ -212,32 +232,17 @@ This package provides utilities to enhance working with server-sent events (SSE)
 
 ```php
 return new EventStreamResponse(function () {
-    while (true) {
-        yield new ServerEvent(time(), type: 'ping');
+    yield new ServerEvent(time(), type: 'ping');
 
-        if (connection_aborted()) {
-            break;
-        }
-
-        sleep(1);
-    }
+    sleep(1);
+    
+    yield new ServerEvent(time(), type: 'ping');
 });
 ```
 
-## Symfony 6.1 Support
-
-This feature is fully implemented since Symfony 6.1, so you can remove 
-this package from your dependencies after upgrading accordingly.
-
-## Symfony 7.1 Support
-
-The `$container->import()` method support in `prependExtension` was implemented in Symfony 7.1,
-so you can remove this package from your dependencies after upgrading accordingly.
-
-## Symfony 7.2 Support
-
-The `MicroKernelTrait` optional capabilities were implemented in Symfony 7.2, so you can remove this package
-from your dependencies after upgrading accordingly.
+> [!NOTE]
+> The `EvenStreamResponse` and `ServerEvent` are natively supported since Symfony 7.3, so you can remove this package
+> from your dependencies after upgrading accordingly.
 
 ### Upgrade Notes
 
